@@ -1,0 +1,375 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt,a4paper,oneside]{book}
+\usepackage[margin=2.5cm]{geometry}
+
+% ------------------------------------------------------------------------------
+% customize the headers with fancyhdr package
+% ------------------------------------------------------------------------------
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\nouppercase{\rightmark}}
+\fancyfoot[LE,RO]{\thepage}
+\pagestyle{fancy}
+
+% ------------------------------------------------------------------------------
+% Index
+% ------------------------------------------------------------------------------
+\usepackage{makeidx}
+\makeindex
+
+% ------------------------------------------------------------------------------
+% Hyperlinks
+% ------------------------------------------------------------------------------
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage[all]{hypcap}  % Be sure to call this package after loading hyperref.
+
+% ------------------------------------------------------------------------------
+% Glossaries, must be after hyperref
+% ------------------------------------------------------------------------------
+\usepackage[xindy,toc]{glossaries}
+\makeglossaries{}
+
+% ------------------------------------------------------------------------------
+% load tocbibind to add contents,list of figures, list of tables and
+% bibliography into the toc
+% ------------------------------------------------------------------------------
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+% \usepackage[
+% 	backend=bibtex,
+% 	natbib,
+% 	style=authoryear,
+% 	citestyle=authoryear,
+% 	maxbibnames=99,
+% 	maxcitenames=1
+% ]{biblatex}
+% \addbibresource{dlbook-complete.bib}
+
+% make the 'et al.' italic
+% \DefineBibliographyStrings{english}{%
+%     andothers = {\it et\addabbrvspace al\adddot}
+% }
+
+% A workaround to fix a known bug in biblatex, see http://tex.stackexchange.com/questions/311426/bibliography-error-use-of-blxbblverbaddi-doesnt-match-its-definition-ve
+% \makeatletter
+% \def\blx@maxline{77}
+% \makeatother
+
+% \usepackage{natbib}
+% \usepackage{tocbibind}
+
+% ------------------------------------------------------------------------------
+% Needed to level up the bibliography in the toc
+% ------------------------------------------------------------------------------
+\usepackage{bookmark}
+\usepackage[figurename=图.]{caption}
+
+% ------------------------------------------------------------------------------
+% Needed to load images
+% ------------------------------------------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{./figures/}}   % where to look for images
+
+% ------------------------------------------------------------------------------
+% for long and nice table
+% ------------------------------------------------------------------------------
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{ltxtable}
+
+% for compact item list
+\usepackage{paralist}
+% \usepackage{enumitem}
+\usepackage[inline]{enumitem}
+% for algorithm
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+% \usepackage{algpseudocode}
+
+% \renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}} 
+
+% ------------------------------------------------------------------------------
+% Math - Warning: before cjkfonts (xeCJK) and other package loads fontspec
+% ------------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\numberwithin{equation}{chapter}
+
+% font selection for mathematics with XeLaTeX, MUST after amsfonts
+\usepackage{mathspec}
+% \setmathsfont(Digits,Latin,Greek)[Numbers={Lining,Proportional}]{Minion Pro}
+
+% There's no italic sans-serif math font by default, but it's needed in this book
+% follow: http://tex.stackexchange.com/questions/77640/bold-italic-and-sans-serif-math-symbols
+% to define a \mathsfit{} macro
+\DeclareMathAlphabet{\mathsfit}{\encodingdefault}{\sfdefault}{m}{sl}
+\SetMathAlphabet{\mathsfit}{bold}{\encodingdefault}{\sfdefault}{bx}{sl}
+
+% ------------------------------------------------------------------------------
+% Tikz
+% ------------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,shapes.geometric,shapes.misc }
+
+% ------------------------------------------------------------------------------
+% CJK support
+% ------------------------------------------------------------------------------
+\usepackage{xeCJK}
+
+% ------------------------------------------------------------------------------
+% Localization setting
+% ------------------------------------------------------------------------------
+
+\usepackage{titlesec}
+
+\titleformat{\part}[display]
+{\centering\bfseries\Huge}%
+{\Huge 第 \thepart{} 部分}%
+{12 pt}%
+{\bfseries\Huge}%
+
+\titleformat{\chapter}[display]
+  {\bfseries\huge}%
+  {\huge 第 \thechapter{} 章}%
+  {10 pt}%
+  {\bfseries\huge}%
+
+\renewcommand{\contentsname}{目录}
+\renewcommand{\indexname}{索引}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+% Redefine \emph to be both bold and italic, better in chinese document
+%\let\emph\relax
+%\DeclareTextFontCommand{\emph}{\bfseries\em} % bold and italic
+%\DeclareTextFontCommand{\emph}{\bfseries} % just bold
+
+\usepackage{indentfirst}
+
+% ------------------------------------------------------------------------------
+% Font setting
+% ------------------------------------------------------------------------------
+
+% Set Roboto and Source Code Pro, which are installed with TexLive, for western
+% fonts:
+
+% \usepackage[no-math]{fontspec}
+
+\newcommand{\robotomd}[0]{Light}
+\newcommand{\robotobf}[0]{Medium}
+\newcommand{\robotoit}[0]{LightItalic}
+\newcommand{\robotobi}[0]{MediumItalic}
+\newcommand{\codepromd}[0]{Light}
+\newcommand{\codeprobf}[0]{Medium}
+\newcommand{\codeproit}[0]{LightIt}
+\newcommand{\codeprobi}[0]{MediumIt}
+\newcommand{\serifpromd}[0]{Light}
+\newcommand{\serifprobf}[0]{Semibold}
+
+% \newfontfamily\Roboto{Roboto}[
+%   Extension=.ttf,
+%   Path=\robotodir,
+%   UprightFont=*-Regular,
+%   BoldFont=*-Bold,
+%   ItalicFont=*-Italic,
+%   BoldItalicFont=*-BoldItalic]
+\newfontfamily\Roboto{Roboto}
+
+% \newfontfamily\SourceCodePro{SourceCodePro}[
+%   Extension=.otf,
+%   Path=\sourcecodeprodir,
+%   UprightFont=*-\codepromd,
+%   BoldFont=*-\codeprobf,
+%   ItalicFont=*-\codeproit,
+%   BoldItalicFont=*-\codeprobi]
+\newfontfamily\SourceCodePro{Source Code Pro}
+
+% Download from https://github.com/adobe-fonts/source-serif-pro/releases
+% \newfontfamily\SourceSerifPro{Source Serif Pro}[
+%   UprightFont=*-Regular,
+%   BoldFont=*-Bold]
+\newfontfamily\SourceSerifPro{Source Serif Pro}
+\newcommand{\serif}[0]{\SourceSerifPro}
+
+\newfontfamily\RobotoThin{Roboto}[
+  UprightFont=*-Thin,
+  ItalicFont=*-ThinItalic]
+
+\newfontfamily\RobotoLight{Roboto}[
+  UprightFont=*-Light,
+  ItalicFont=*-LightItalic]
+
+\newfontfamily\RobotoRegular{Roboto}[
+  UprightFont=*-Regular,
+  ItalicFont=*-Italic]
+
+\newfontfamily\RobotoMedium{Roboto}[
+  UprightFont=*-Medium,
+  ItalicFont=*-MediumItalic]
+
+\newfontfamily\RobotoBold{Roboto}[
+  UprightFont=*-Bold,
+  ItalicFont=*-BoldItalic]
+
+\newfontfamily\RobotoBlack{Roboto}[
+  UprightFont=*-Black,
+  ItalicFont=*-BlackItalic]
+  
+\setmainfont[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic]{Roboto}
+
+\setsansfont[
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic]{Roboto}
+
+\setmonofont[
+  UprightFont=SourceCodePro-Regular,
+  BoldFont=SourceCodePro-Bold,
+  ItalicFont=SourceCodePro-It,
+  BoldItalicFont=SourceCodePro-BoldIt]{Source Code Pro}
+
+\newCJKfontfamily[NotoSansSC]\NotoSansSC[
+  UprightFont={Noto Sans CJK SC Regular},
+  BoldFont={Noto Sans CJK SC Bold},
+  ItalicFont={Noto Sans CJK SC Regular},
+  BoldItalicFont={Noto Sans CJK SC Bold},
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto Sans CJK SC}
+
+\newCJKfontfamily[NotoSansMonoSC]\NotoSansMonoSC[
+  UprightFont={Noto Sans Mono CJK SC Regular},
+  BoldFont={Noto Sans Mono CJK SC Bold},
+  ItalicFont={Noto Sans Mono CJK SC Regular},
+  BoldItalicFont={Noto Sans Mono CJK SC Bold},
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant]{Noto Sans Mono CJK SC}
+
+\newCJKfontfamily[NotoSansSCThin]\NotoSansSCThin[
+  UprightFont={Noto Sans CJK SC Thin},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCLight]\NotoSansSCLight[
+  UprightFont={Noto Sans CJK SC Light},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCDemiLight]\NotoSansSCDemiLight[
+  UprightFont={Noto Sans CJK SC DemiLight},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCRegular]\NotoSansSCRegular[
+  UprightFont={Noto Sans CJK SC Regular},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCMedium]\NotoSansSCMedium[
+  UprightFont={Noto Sans CJK SC Medium},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCBold]\NotoSansSCBold[
+  UprightFont={Noto Sans CJK SC Bold},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansSCBlack]\NotoSansSCBlack[
+  UprightFont={Noto Sans CJK SC Black},
+  AutoFakeSlant=true]{Noto Sans CJK SC}  
+
+\newCJKfontfamily[NotoSansMonoSCRegular]\NotoSansMonoSCRegular[
+  UprightFont={Noto Sans Mono CJK SC Regular},
+  AutoFakeSlant=true]{Noto Sans Mono CJK SC Regular}
+
+\newCJKfontfamily[NotoSansMonoSCBold]\NotoSansMonoSCBold[
+  UprightFont={Noto Sans Mono CJK SC Bold},
+  AutoFakeSlant=true]{Noto Sans Mono CJK SC Bold}
+
+\setCJKmainfont[
+  UprightFont={Noto Sans CJK SC Regular},
+  BoldFont={Noto Sans CJK SC Bold},
+  ItalicFont={Noto Sans CJK SC Regular},
+  BoldItalicFont={Noto Sans CJK SC Bold},
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant
+]{Noto Sans CJK SC}
+
+\setCJKsansfont[
+  UprightFont={Noto Sans CJK SC Regular},
+  BoldFont={Noto Sans CJK SC Bold},
+  ItalicFont={Noto Sans CJK SC Regular},
+  BoldItalicFont={Noto Sans CJK SC Bold},
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant
+]{Noto Sans CJK SC}
+
+\setCJKmonofont[
+  UprightFont={Noto Sans Mono CJK SC Regular},
+  BoldFont={Noto Sans Mono CJK SC Bold},
+  ItalicFont={Noto Sans Mono CJK SC Regular},
+  BoldItalicFont={Noto Sans Mono CJK SC Bold},
+  ItalicFeatures=FakeSlant,
+  BoldItalicFeatures=FakeSlant
+]{Noto Sans Mono CJK SC}
+
+
+% ------------------------------------------------------------------------------
+% Line space
+% ------------------------------------------------------------------------------
+\usepackage{setspace}
+\onehalfspacing{}
+
+% ------------------------------------------------------------------------------
+% Load glossaries
+% ------------------------------------------------------------------------------
+\input{contents/glossaries}
+
+% ------------------------------------------------------------------------------
+% The document body
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+\input{contents/title}
+
+\frontmatter
+
+%\maketitle
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+\pagebreak
+
+% \input{contents/acknowledgements}
+% \input{contents/notation}
+
+\mainmatter{}
+
+\input{contents/proofs}
+\input{contents/structures}
+\input{contents/counting}
+\input{contents/probability}
+\input{contents/recurrences}
+
+% \appendix
+% appendix chapters here
+
+\backmatter{}
+
+\bookmarksetup{startatroot}
+
+% \printbibliography[
+% 	heading=bibintoc,
+% 	title={参考文献}
+% ]
+\printglossary[title={术语表}]
+\printindex
+
+\end{document}
